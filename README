@@ -2,8 +2,8 @@ Have you been annoyed by gnome 3 turning off your display while you were
 trying to watch eg Youtube videos?  No worries, you shall be helped :-)
 
 Gnome-Presentation-Mode is a tiny gnome-shell extension that adds a new
-entry to the power indicator (the menu that opens when you click the
-battery icon).  While presentation mode is on the screensaver and the
+entry to the user menu (the menu that opens when you click your
+name).  While presentation mode is on the screensaver and the
 automatic suspend will not kick in, allowing you to sit back and enjoy
 whatever you are doing without having to wiggle the mouse every few
 minutes.
@@ -13,9 +13,11 @@ Installation instructions: Just clone the repo, copy the extension to
 your gnome-shell extensions directory and restart gnome-shell (default:
 alt+f2, type r, press enter).
 
-git clone https://github.com/RaphaelKimmig/Gnome-Presentation-Mode.git
+git clone https://github.com/silentmatt/Gnome-Presentation-Mode.git
 
 cd Gnome-Presentation-Mode
+
+git checkout userMenu
 
 mkdir -p ~/.local/share/gnome-shell/extensions/
 

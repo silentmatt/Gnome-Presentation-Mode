@@ -28,30 +28,30 @@ function init(extensionMeta) {
 }
 
 function enable() {
-    let batteryMenu = Main.panel._statusArea.battery;
+    let userMenu = Main.panel._statusArea.userMenu;
 
-    batteryMenu._itemSeparator = new PopupMenu.PopupSeparatorMenuItem();
-    batteryMenu.menu.addMenuItem(batteryMenu._itemSeparator);
-    batteryMenu._presentationswitch = new PopupMenu.PopupSwitchMenuItem(_("Presentation mode"), false);
-    batteryMenu.menu.addMenuItem(batteryMenu._presentationswitch);
-    batteryMenu._inhibit = undefined;
-    batteryMenu._sessionProxy = new SessionProxy(DBus.session, 'org.gnome.SessionManager', '/org/gnome/SessionManager');
+    userMenu._itemSeparator = new PopupMenu.PopupSeparatorMenuItem();
+    userMenu.menu.addMenuItem(userMenu._itemSeparator);
+    userMenu._presentationswitch = new PopupMenu.PopupSwitchMenuItem(_("Presentation mode"), false);
+    userMenu.menu.addMenuItem(userMenu._presentationswitch);
+    userMenu._inhibit = undefined;
+    userMenu._sessionProxy = new SessionProxy(DBus.session, 'org.gnome.SessionManager', '/org/gnome/SessionManager');
 
-    batteryMenu._onInhibit = function(cookie) {
-        batteryMenu._inhibit = cookie;
+    userMenu._onInhibit = function(cookie) {
+        userMenu._inhibit = cookie;
     };
 
-    batteryMenu._presentationswitch.connect('toggled', Lang.bind(batteryMenu, function() {
-        if(batteryMenu._inhibit) {
-            batteryMenu._sessionProxy.UninhibitRemote(batteryMenu._inhibit);
-            batteryMenu._inhibit = undefined;
+    userMenu._presentationswitch.connect('toggled', Lang.bind(userMenu, function() {
+        if(userMenu._inhibit) {
+            userMenu._sessionProxy.UninhibitRemote(userMenu._inhibit);
+            userMenu._inhibit = undefined;
             } else {
                 try {
-                    batteryMenu._sessionProxy.InhibitRemote("presentor",
+                    userMenu._sessionProxy.InhibitRemote("presentor",
                         0, 
                         "Presentation mode",
                         9,
-                        Lang.bind(batteryMenu, batteryMenu._onInhibit));
+                        Lang.bind(userMenu, userMenu._onInhibit));
                 } catch(e) {
                     //
                 }
@@ -60,12 +60,12 @@ function enable() {
 }
 
 function disable() {
-    let batteryMenu = Main.panel._statusArea.battery;
+    let userMenu = Main.panel._statusArea.userMenu;
 
-    batteryMenu._presentationswitch.destroy();
-    batteryMenu._itemSeparator.destroy();
-    if(batteryMenu._inhibit) {
-        batteryMenu._sessionProxy.UninhibitRemote(batteryMenu._inhibit);
-        batteryMenu._inhibit = undefined;
+    userMenu._presentationswitch.destroy();
+    userMenu._itemSeparator.destroy();
+    if(userMenu._inhibit) {
+        userMenu._sessionProxy.UninhibitRemote(userMenu._inhibit);
+        userMenu._inhibit = undefined;
         }
 }
